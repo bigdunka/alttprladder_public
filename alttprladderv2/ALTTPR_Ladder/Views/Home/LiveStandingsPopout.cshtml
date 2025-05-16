@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALTTPR Ladder - Standings Popout</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/helpers.js"></script>
+    <link rel="icon" href="https://alttprladder.com/favicon.ico?v=2" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1RD73NTTV0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-1RD73NTTV0');</script>
+</head>
+<body>
+    @{
+        Layout = null;
+        int i = 0;
+    }
+
+    <style>
+        table {
+            text-align: left;
+            position: relative;
+            font-size: 14px;
+        }
+
+        th {
+            position: sticky;
+            top: 0;
+            text-align: center;
+            background-color: #00004D;
+        }
+    </style>
+
+    <div id="popup-standings-div">
+        <div>
+            <table style="width: 100%">
+                <tr class="home-current-race-header-div">
+                    <th colspan="3">
+                        @Model.RaceName - [<span id="current-timer-span"></span>] - @Model.RaceMode<br />Total: @Model.RacerCount - Racing: @Model.CurrentlyRacing
+                    </th>
+                </tr>
+                @foreach (var item in Model.CurrentRaceStandings)
+                {
+
+                    var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+                    <tr style="text-align: center; @background; border-bottom-width: var(--bs-border-width);">
+                        <td class="standings-table-object">
+                            @(item.FinishPlace != 999 ? (item.FinishTime != "FF" && item.FinishTime != "DQ" ? item.FinishPlace.ToString() : "FF") + ")" : "")
+                        </td>
+                        <td style="text-align: left;" class="standings-table-object">
+                            @item.RacerName &nbsp;&nbsp; [@item.Ranking] @if (Model.CurrentlyRacing == 0) { <span style="color: @(item.Change > 0 ? "green" : item.Change < 0 ? "red" : "white") !important">@(item.Change > 0 ? "+" + item.Change : item.Change)</span> }
+                        </td>
+                        <td class="standings-table-object">
+                            @item.FinishTime
+                        </td>
+                    </tr>
+
+                    i++;
+                }
+            </table>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        var StartTime = @Model.UTCStartTicks ;
+        var CurrentTime = Math.round(Date.now() / 1000);
+
+        $(document).ready(function () {
+            SetTimer();
+            setInterval(IncrementTimer, 1000);
+            setInterval(ReloadStandings, 30000);
+        });
+
+        function IncrementTimer() {
+            SetTimer();
+        }
+
+        function SetTimer() {
+            if (Number.isNaN(StartTime) || StartTime == 0) {
+                document.getElementById('current-timer-span').innerHTML = "";
+            } else {
+                var CurrentTime = Math.round(Date.now() / 1000);
+                var TimerTime = CurrentTime - StartTime;
+
+                if (TimerTime < 0) {
+                    TimerTime = 0;
+                }
+
+                var h; var m; var s;
+
+                h = (Math.floor(TimerTime / 3600)).toString();
+                m = (Math.floor((TimerTime % 3600) / 60)).toString();
+                s = (TimerTime % 60).toString();
+
+                if (m.length == 1) { m = "0" + m.toString(); }
+                if (s.length == 1) { s = "0" + s.toString(); }
+
+                document.getElementById('current-timer-span').innerHTML = h + ':' + m + ':' + s;
+            }
+        }
+
+        function ReloadStandings() {
+            window.location.reload();
+        }
+    </script>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>

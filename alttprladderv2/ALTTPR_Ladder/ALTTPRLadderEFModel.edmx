@@ -1,0 +1,819 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ALTTPR_Ladder_DEVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tb_api_requests">
+          <Key>
+            <PropertyRef Name="request_id" />
+          </Key>
+          <Property Name="request_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Request" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IPAddress" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RequestDateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_branches">
+          <Key>
+            <PropertyRef Name="branch_id" />
+          </Key>
+          <Property Name="branch_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EndPointURL" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="SeedURL" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_browse_logs">
+          <Key>
+            <PropertyRef Name="log_id" />
+          </Key>
+          <Property Name="log_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Request" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Parameter" Type="nvarchar" MaxLength="255" />
+          <Property Name="IPAddress" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RequestDateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_decay">
+          <Key>
+            <PropertyRef Name="decay_id" />
+          </Key>
+          <Property Name="decay_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="racer_id" Type="int" Nullable="false" />
+          <Property Name="flag_id" Type="int" Nullable="false" />
+          <Property Name="DecayAccrued" Type="int" Nullable="false" />
+          <Property Name="LastUpdated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_entrants">
+          <Key>
+            <PropertyRef Name="entrant_id" />
+          </Key>
+          <Property Name="entrant_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="race_id" Type="int" Nullable="false" />
+          <Property Name="racer_id" Type="int" Nullable="false" />
+          <Property Name="FinishTime" Type="int" Nullable="false" />
+          <Property Name="DateTimeEntered" Type="datetime" Nullable="false" />
+          <Property Name="DateTimeFinished" Type="datetime" />
+          <Property Name="Comments" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tb_flags">
+          <Key>
+            <PropertyRef Name="flag_id" />
+          </Key>
+          <Property Name="flag_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FlagName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="FlagString" Type="nvarchar(max)" />
+          <Property Name="branch_id" Type="int" Nullable="false" />
+          <Property Name="IsMystery" Type="bit" Nullable="false" />
+          <Property Name="IsSpoiler" Type="bit" Nullable="false" />
+          <Property Name="IsInvitational" Type="bit" Nullable="false" />
+          <Property Name="IsGrabBag" Type="bit" Nullable="false" />
+          <Property Name="HoursToComplete" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_gainpercentages">
+          <Key>
+            <PropertyRef Name="gain_id" />
+          </Key>
+          <Property Name="gain_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RacerCount" Type="int" Nullable="false" />
+          <Property Name="GainPerc" Type="decimal" Precision="8" Scale="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_invitational_pairings">
+          <Key>
+            <PropertyRef Name="pairing_id" />
+          </Key>
+          <Property Name="pairing_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="invitational_id" Type="int" Nullable="false" />
+          <Property Name="PairingID" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="Week" Type="int" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="participant1_id" Type="int" Nullable="false" />
+          <Property Name="participant2_id" Type="int" Nullable="false" />
+          <Property Name="Participant1Time" Type="int" />
+          <Property Name="Participant2Time" Type="int" />
+          <Property Name="RaceDateTime" Type="datetime" />
+          <Property Name="ThreadOpened" Type="bit" Nullable="false" />
+          <Property Name="RaceRoom" Type="nvarchar" MaxLength="255" />
+          <Property Name="RaceFinished" Type="bit" Nullable="false" />
+          <Property Name="Participant1TrackingKey" Type="nvarchar" MaxLength="50" />
+          <Property Name="Participant1RestreamKey" Type="nvarchar" MaxLength="50" />
+          <Property Name="Participant2TrackingKey" Type="nvarchar" MaxLength="50" />
+          <Property Name="Participant2RestreamKey" Type="nvarchar" MaxLength="50" />
+          <Property Name="flag_id" Type="int" />
+          <Property Name="EventID" Type="nvarchar" MaxLength="50" />
+          <Property Name="NeedsUpdates" Type="bit" Nullable="false" />
+          <Property Name="HasRestream" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_invitational_participants">
+          <Key>
+            <PropertyRef Name="participant_id" />
+          </Key>
+          <Property Name="participant_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="invitational_id" Type="int" Nullable="false" />
+          <Property Name="racer_id" Type="int" Nullable="false" />
+          <Property Name="RaceTimeGG" Type="nvarchar" MaxLength="255" />
+          <Property Name="Seed" Type="int" Nullable="false" />
+          <Property Name="SendTrackerCode" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_invitationals">
+          <Key>
+            <PropertyRef Name="invitational_id" />
+          </Key>
+          <Property Name="invitational_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InvitationalName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="CurrentWeek" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_logs">
+          <Key>
+            <PropertyRef Name="log_id" />
+          </Key>
+          <Property Name="log_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogMessage" Type="nvarchar(max)" />
+          <Property Name="DateTimeLogged" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tb_processes">
+          <Key>
+            <PropertyRef Name="process_id" />
+          </Key>
+          <Property Name="process_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProcessStart" Type="datetime" Nullable="false" />
+          <Property Name="ProcessEnd" Type="datetime" />
+          <Property Name="Messages" Type="text" />
+        </EntityType>
+        <EntityType Name="tb_racers">
+          <Key>
+            <PropertyRef Name="racer_id" />
+          </Key>
+          <Property Name="racer_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="old_racer_id" Type="int" />
+          <Property Name="RacerGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RacerName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="RacerLogin" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="DiscordID" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="StreamURL" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="tb_races">
+          <Key>
+            <PropertyRef Name="race_id" />
+          </Key>
+          <Property Name="race_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RaceGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="flag_id" Type="int" Nullable="false" />
+          <Property Name="grabbag_id" Type="int" />
+          <Property Name="Schedule" Type="int" Nullable="false" />
+          <Property Name="StartDateTime" Type="datetime" Nullable="false" />
+          <Property Name="RaceStartTime" Type="datetime" />
+          <Property Name="SeedURL" Type="nvarchar" MaxLength="255" />
+          <Property Name="MysteryJSON" Type="text" />
+          <Property Name="HasStarted" Type="bit" Nullable="false" />
+          <Property Name="HasCompleted" Type="bit" Nullable="false" />
+          <Property Name="HasBeenProcessed" Type="bit" />
+          <Property Name="ChampionshipRace" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_rankings">
+          <Key>
+            <PropertyRef Name="ranking_id" />
+          </Key>
+          <Property Name="ranking_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="racer_id" Type="int" Nullable="false" />
+          <Property Name="flag_id" Type="int" Nullable="false" />
+          <Property Name="race_id" Type="int" Nullable="false" />
+          <Property Name="Ranking" Type="int" Nullable="false" />
+          <Property Name="Change" Type="int" Nullable="false" />
+          <Property Name="Result" Type="int" Nullable="false" />
+          <Property Name="LastUpdated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_rankings_cache">
+          <Key>
+            <PropertyRef Name="cache_id" />
+          </Key>
+          <Property Name="cache_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="flag_id" Type="int" Nullable="false" />
+          <Property Name="LastUpdated" Type="datetime" Nullable="false" />
+          <Property Name="racer_id" Type="int" Nullable="false" />
+          <Property Name="RacerName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Ranking" Type="int" Nullable="false" />
+          <Property Name="Rank" Type="int" Nullable="false" />
+          <Property Name="GainLoss" Type="int" Nullable="false" />
+          <Property Name="TotalRaces" Type="int" Nullable="false" />
+          <Property Name="Firsts" Type="int" Nullable="false" />
+          <Property Name="Seconds" Type="int" Nullable="false" />
+          <Property Name="Thirds" Type="int" Nullable="false" />
+          <Property Name="Forfeits" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_schedule">
+          <Key>
+            <PropertyRef Name="schedule_id" />
+          </Key>
+          <Property Name="schedule_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="flag_id" Type="int" Nullable="false" />
+          <Property Name="ScheduleGroup" Type="int" Nullable="false" />
+          <Property Name="SeedOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_seed_tracking">
+          <Key>
+            <PropertyRef Name="tracking_id" />
+          </Key>
+          <Property Name="tracking_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="seed_id" Type="int" Nullable="false" />
+          <Property Name="IPAddress" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DownloadDateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_seeds">
+          <Key>
+            <PropertyRef Name="seed_id" />
+          </Key>
+          <Property Name="seed_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="race_id" Type="int" Nullable="false" />
+          <Property Name="SeedHash" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_spoilers">
+          <Key>
+            <PropertyRef Name="spoiler_id" />
+          </Key>
+          <Property Name="spoiler_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="race_id" Type="int" Nullable="false" />
+          <Property Name="SpoilerHash" Type="nvarchar" MaxLength="32" />
+          <Property Name="FileLocation" Type="nvarchar(max)" />
+        </EntityType>
+        <Function Name="sp_CacheRankings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="flag_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_CalculateRaces" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_CalculateRankings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="race_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ProcessDecay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="flag_id" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="ALTTPR_Ladder_DEVModelStoreContainer">
+          <EntitySet Name="tb_api_requests" EntityType="Self.tb_api_requests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_branches" EntityType="Self.tb_branches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_browse_logs" EntityType="Self.tb_browse_logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_decay" EntityType="Self.tb_decay" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_entrants" EntityType="Self.tb_entrants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_flags" EntityType="Self.tb_flags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_gainpercentages" EntityType="Self.tb_gainpercentages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_invitational_pairings" EntityType="Self.tb_invitational_pairings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_invitational_participants" EntityType="Self.tb_invitational_participants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_invitationals" EntityType="Self.tb_invitationals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_logs" EntityType="Self.tb_logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_processes" EntityType="Self.tb_processes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_racers" EntityType="Self.tb_racers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_races" EntityType="Self.tb_races" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_rankings" EntityType="Self.tb_rankings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_rankings_cache" EntityType="Self.tb_rankings_cache" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_schedule" EntityType="Self.tb_schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_seed_tracking" EntityType="Self.tb_seed_tracking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_seeds" EntityType="Self.tb_seeds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_spoilers" EntityType="Self.tb_spoilers" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ALTTPR_Ladder_DEVModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ALTTPR_LadderEntities1" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="sp_CalculateRaces" />
+          <EntitySet Name="tb_api_requests" EntityType="ALTTPR_Ladder_DEVModel.tb_api_requests" />
+          <EntitySet Name="tb_branches" EntityType="ALTTPR_Ladder_DEVModel.tb_branches" />
+          <EntitySet Name="tb_browse_logs" EntityType="ALTTPR_Ladder_DEVModel.tb_browse_logs" />
+          <EntitySet Name="tb_decay" EntityType="ALTTPR_Ladder_DEVModel.tb_decay" />
+          <EntitySet Name="tb_entrants" EntityType="ALTTPR_Ladder_DEVModel.tb_entrants" />
+          <EntitySet Name="tb_flags" EntityType="ALTTPR_Ladder_DEVModel.tb_flags" />
+          <EntitySet Name="tb_invitational_pairings" EntityType="ALTTPR_Ladder_DEVModel.tb_invitational_pairings" />
+          <EntitySet Name="tb_invitational_participants" EntityType="ALTTPR_Ladder_DEVModel.tb_invitational_participants" />
+          <EntitySet Name="tb_invitationals" EntityType="ALTTPR_Ladder_DEVModel.tb_invitationals" />
+          <EntitySet Name="tb_logs" EntityType="ALTTPR_Ladder_DEVModel.tb_logs" />
+          <EntitySet Name="tb_processes" EntityType="ALTTPR_Ladder_DEVModel.tb_processes" />
+          <EntitySet Name="tb_racers" EntityType="ALTTPR_Ladder_DEVModel.tb_racers" />
+          <EntitySet Name="tb_rankings" EntityType="ALTTPR_Ladder_DEVModel.tb_rankings" />
+          <EntitySet Name="tb_rankings_cache" EntityType="ALTTPR_Ladder_DEVModel.tb_rankings_cache" />
+          <EntitySet Name="tb_schedule" EntityType="ALTTPR_Ladder_DEVModel.tb_schedule" />
+          <EntitySet Name="tb_seed_tracking" EntityType="ALTTPR_Ladder_DEVModel.tb_seed_tracking" />
+          <EntitySet Name="tb_seeds" EntityType="ALTTPR_Ladder_DEVModel.tb_seeds" />
+          <EntitySet Name="tb_spoilers" EntityType="ALTTPR_Ladder_DEVModel.tb_spoilers" />
+          <FunctionImport Name="sp_CacheRankings">
+          <Parameter Name="flag_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CalculateRankings">
+          <Parameter Name="race_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ProcessDecay">
+          <Parameter Name="flag_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="tb_gainpercentages" EntityType="ALTTPR_Ladder_DEVModel.tb_gainpercentages" />
+          <EntitySet Name="tb_races" EntityType="ALTTPR_Ladder_DEVModel.tb_races" />
+        </EntityContainer>
+        <EntityType Name="tb_api_requests">
+          <Key>
+            <PropertyRef Name="request_id" />
+          </Key>
+          <Property Name="request_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Request" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IPAddress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RequestDateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tb_branches">
+          <Key>
+            <PropertyRef Name="branch_id" />
+          </Key>
+          <Property Name="branch_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EndPointURL" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SeedURL" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tb_browse_logs">
+          <Key>
+            <PropertyRef Name="log_id" />
+          </Key>
+          <Property Name="log_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Request" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Parameter" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IPAddress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RequestDateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tb_decay">
+          <Key>
+            <PropertyRef Name="decay_id" />
+          </Key>
+          <Property Name="decay_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="racer_id" Type="Int32" Nullable="false" />
+          <Property Name="flag_id" Type="Int32" Nullable="false" />
+          <Property Name="DecayAccrued" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tb_entrants">
+          <Key>
+            <PropertyRef Name="entrant_id" />
+          </Key>
+          <Property Name="entrant_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="race_id" Type="Int32" Nullable="false" />
+          <Property Name="racer_id" Type="Int32" Nullable="false" />
+          <Property Name="FinishTime" Type="Int32" Nullable="false" />
+          <Property Name="DateTimeEntered" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateTimeFinished" Type="DateTime" Precision="3" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tb_flags">
+          <Key>
+            <PropertyRef Name="flag_id" />
+          </Key>
+          <Property Name="flag_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FlagName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FlagString" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="branch_id" Type="Int32" Nullable="false" />
+          <Property Name="IsMystery" Type="Boolean" Nullable="false" />
+          <Property Name="IsSpoiler" Type="Boolean" Nullable="false" />
+          <Property Name="IsInvitational" Type="Boolean" Nullable="false" />
+          <Property Name="IsGrabBag" Type="Boolean" Nullable="false" />
+          <Property Name="HoursToComplete" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_invitational_pairings">
+          <Key>
+            <PropertyRef Name="pairing_id" />
+          </Key>
+          <Property Name="pairing_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="invitational_id" Type="Int32" Nullable="false" />
+          <Property Name="PairingID" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Week" Type="Int32" Nullable="false" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="participant1_id" Type="Int32" Nullable="false" />
+          <Property Name="participant2_id" Type="Int32" Nullable="false" />
+          <Property Name="Participant1Time" Type="Int32" />
+          <Property Name="Participant2Time" Type="Int32" />
+          <Property Name="RaceDateTime" Type="DateTime" Precision="3" />
+          <Property Name="ThreadOpened" Type="Boolean" Nullable="false" />
+          <Property Name="RaceRoom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RaceFinished" Type="Boolean" Nullable="false" />
+          <Property Name="Participant1TrackingKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Participant1RestreamKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Participant2TrackingKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Participant2RestreamKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="flag_id" Type="Int32" />
+          <Property Name="EventID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NeedsUpdates" Type="Boolean" Nullable="false" />
+          <Property Name="HasRestream" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_invitational_participants">
+          <Key>
+            <PropertyRef Name="participant_id" />
+          </Key>
+          <Property Name="participant_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="invitational_id" Type="Int32" Nullable="false" />
+          <Property Name="racer_id" Type="Int32" Nullable="false" />
+          <Property Name="RaceTimeGG" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Seed" Type="Int32" Nullable="false" />
+          <Property Name="SendTrackerCode" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_invitationals">
+          <Key>
+            <PropertyRef Name="invitational_id" />
+          </Key>
+          <Property Name="invitational_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvitationalName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CurrentWeek" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_logs">
+          <Key>
+            <PropertyRef Name="log_id" />
+          </Key>
+          <Property Name="log_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateTimeLogged" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tb_processes">
+          <Key>
+            <PropertyRef Name="process_id" />
+          </Key>
+          <Property Name="process_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProcessStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProcessEnd" Type="DateTime" Precision="3" />
+          <Property Name="Messages" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tb_racers">
+          <Key>
+            <PropertyRef Name="racer_id" />
+          </Key>
+          <Property Name="racer_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="old_racer_id" Type="Int32" />
+          <Property Name="RacerGUID" Type="Guid" Nullable="false" />
+          <Property Name="RacerName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RacerLogin" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DiscordID" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="StreamURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tb_rankings">
+          <Key>
+            <PropertyRef Name="ranking_id" />
+          </Key>
+          <Property Name="ranking_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="racer_id" Type="Int32" Nullable="false" />
+          <Property Name="flag_id" Type="Int32" Nullable="false" />
+          <Property Name="race_id" Type="Int32" Nullable="false" />
+          <Property Name="Ranking" Type="Int32" Nullable="false" />
+          <Property Name="Change" Type="Int32" Nullable="false" />
+          <Property Name="Result" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tb_rankings_cache">
+          <Key>
+            <PropertyRef Name="cache_id" />
+          </Key>
+          <Property Name="cache_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="flag_id" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="racer_id" Type="Int32" Nullable="false" />
+          <Property Name="RacerName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Ranking" Type="Int32" Nullable="false" />
+          <Property Name="Rank" Type="Int32" Nullable="false" />
+          <Property Name="GainLoss" Type="Int32" Nullable="false" />
+          <Property Name="TotalRaces" Type="Int32" Nullable="false" />
+          <Property Name="Firsts" Type="Int32" Nullable="false" />
+          <Property Name="Seconds" Type="Int32" Nullable="false" />
+          <Property Name="Thirds" Type="Int32" Nullable="false" />
+          <Property Name="Forfeits" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_schedule">
+          <Key>
+            <PropertyRef Name="schedule_id" />
+          </Key>
+          <Property Name="schedule_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="flag_id" Type="Int32" Nullable="false" />
+          <Property Name="ScheduleGroup" Type="Int32" Nullable="false" />
+          <Property Name="SeedOrder" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_seed_tracking">
+          <Key>
+            <PropertyRef Name="tracking_id" />
+          </Key>
+          <Property Name="tracking_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="seed_id" Type="Int32" Nullable="false" />
+          <Property Name="IPAddress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DownloadDateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tb_seeds">
+          <Key>
+            <PropertyRef Name="seed_id" />
+          </Key>
+          <Property Name="seed_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="race_id" Type="Int32" Nullable="false" />
+          <Property Name="SeedHash" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tb_spoilers">
+          <Key>
+            <PropertyRef Name="spoiler_id" />
+          </Key>
+          <Property Name="spoiler_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="race_id" Type="Int32" Nullable="false" />
+          <Property Name="SpoilerHash" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="FileLocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tb_gainpercentages">
+          <Key>
+            <PropertyRef Name="gain_id" />
+          </Key>
+          <Property Name="gain_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RacerCount" Type="Int32" Nullable="false" />
+          <Property Name="GainPerc" Type="Decimal" Nullable="false" Precision="8" Scale="3" />
+        </EntityType>
+        <EntityType Name="tb_races">
+          <Key>
+            <PropertyRef Name="race_id" />
+          </Key>
+          <Property Name="race_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RaceGUID" Type="Guid" Nullable="false" />
+          <Property Name="flag_id" Type="Int32" Nullable="false" />
+          <Property Name="grabbag_id" Type="Int32" />
+          <Property Name="Schedule" Type="Int32" Nullable="false" />
+          <Property Name="StartDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RaceStartTime" Type="DateTime" Precision="3" />
+          <Property Name="SeedURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MysteryJSON" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="HasStarted" Type="Boolean" Nullable="false" />
+          <Property Name="HasCompleted" Type="Boolean" Nullable="false" />
+          <Property Name="HasBeenProcessed" Type="Boolean" />
+          <Property Name="ChampionshipRace" Type="Boolean" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ALTTPR_Ladder_DEVModelStoreContainer" CdmEntityContainer="ALTTPR_LadderEntities1">
+          <FunctionImportMapping FunctionImportName="sp_CalculateRaces" FunctionName="ALTTPR_Ladder_DEVModel.Store.sp_CalculateRaces" />
+          <EntitySetMapping Name="tb_api_requests">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_api_requests">
+              <MappingFragment StoreEntitySet="tb_api_requests">
+                <ScalarProperty Name="RequestDateTime" ColumnName="RequestDateTime" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="Request" ColumnName="Request" />
+                <ScalarProperty Name="request_id" ColumnName="request_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_branches">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_branches">
+              <MappingFragment StoreEntitySet="tb_branches">
+                <ScalarProperty Name="SeedURL" ColumnName="SeedURL" />
+                <ScalarProperty Name="EndPointURL" ColumnName="EndPointURL" />
+                <ScalarProperty Name="branch_id" ColumnName="branch_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_browse_logs">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_browse_logs">
+              <MappingFragment StoreEntitySet="tb_browse_logs">
+                <ScalarProperty Name="RequestDateTime" ColumnName="RequestDateTime" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="Parameter" ColumnName="Parameter" />
+                <ScalarProperty Name="Request" ColumnName="Request" />
+                <ScalarProperty Name="log_id" ColumnName="log_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_decay">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_decay">
+              <MappingFragment StoreEntitySet="tb_decay">
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="DecayAccrued" ColumnName="DecayAccrued" />
+                <ScalarProperty Name="flag_id" ColumnName="flag_id" />
+                <ScalarProperty Name="racer_id" ColumnName="racer_id" />
+                <ScalarProperty Name="decay_id" ColumnName="decay_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_entrants">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_entrants">
+              <MappingFragment StoreEntitySet="tb_entrants">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="DateTimeFinished" ColumnName="DateTimeFinished" />
+                <ScalarProperty Name="DateTimeEntered" ColumnName="DateTimeEntered" />
+                <ScalarProperty Name="FinishTime" ColumnName="FinishTime" />
+                <ScalarProperty Name="racer_id" ColumnName="racer_id" />
+                <ScalarProperty Name="race_id" ColumnName="race_id" />
+                <ScalarProperty Name="entrant_id" ColumnName="entrant_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_flags">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_flags">
+              <MappingFragment StoreEntitySet="tb_flags">
+                <ScalarProperty Name="HoursToComplete" ColumnName="HoursToComplete" />
+                <ScalarProperty Name="IsGrabBag" ColumnName="IsGrabBag" />
+                <ScalarProperty Name="IsInvitational" ColumnName="IsInvitational" />
+                <ScalarProperty Name="IsSpoiler" ColumnName="IsSpoiler" />
+                <ScalarProperty Name="IsMystery" ColumnName="IsMystery" />
+                <ScalarProperty Name="branch_id" ColumnName="branch_id" />
+                <ScalarProperty Name="FlagString" ColumnName="FlagString" />
+                <ScalarProperty Name="FlagName" ColumnName="FlagName" />
+                <ScalarProperty Name="flag_id" ColumnName="flag_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_invitational_pairings">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_invitational_pairings">
+              <MappingFragment StoreEntitySet="tb_invitational_pairings">
+                <ScalarProperty Name="HasRestream" ColumnName="HasRestream" />
+                <ScalarProperty Name="NeedsUpdates" ColumnName="NeedsUpdates" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="flag_id" ColumnName="flag_id" />
+                <ScalarProperty Name="Participant2RestreamKey" ColumnName="Participant2RestreamKey" />
+                <ScalarProperty Name="Participant2TrackingKey" ColumnName="Participant2TrackingKey" />
+                <ScalarProperty Name="Participant1RestreamKey" ColumnName="Participant1RestreamKey" />
+                <ScalarProperty Name="Participant1TrackingKey" ColumnName="Participant1TrackingKey" />
+                <ScalarProperty Name="RaceFinished" ColumnName="RaceFinished" />
+                <ScalarProperty Name="RaceRoom" ColumnName="RaceRoom" />
+                <ScalarProperty Name="ThreadOpened" ColumnName="ThreadOpened" />
+                <ScalarProperty Name="RaceDateTime" ColumnName="RaceDateTime" />
+                <ScalarProperty Name="Participant2Time" ColumnName="Participant2Time" />
+                <ScalarProperty Name="Participant1Time" ColumnName="Participant1Time" />
+                <ScalarProperty Name="participant2_id" ColumnName="participant2_id" />
+                <ScalarProperty Name="participant1_id" ColumnName="participant1_id" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="PairingID" ColumnName="PairingID" />
+                <ScalarProperty Name="invitational_id" ColumnName="invitational_id" />
+                <ScalarProperty Name="pairing_id" ColumnName="pairing_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_invitational_participants">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_invitational_participants">
+              <MappingFragment StoreEntitySet="tb_invitational_participants">
+                <ScalarProperty Name="SendTrackerCode" ColumnName="SendTrackerCode" />
+                <ScalarProperty Name="Seed" ColumnName="Seed" />
+                <ScalarProperty Name="RaceTimeGG" ColumnName="RaceTimeGG" />
+                <ScalarProperty Name="racer_id" ColumnName="racer_id" />
+                <ScalarProperty Name="invitational_id" ColumnName="invitational_id" />
+                <ScalarProperty Name="participant_id" ColumnName="participant_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_invitationals">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_invitationals">
+              <MappingFragment StoreEntitySet="tb_invitationals">
+                <ScalarProperty Name="CurrentWeek" ColumnName="CurrentWeek" />
+                <ScalarProperty Name="InvitationalName" ColumnName="InvitationalName" />
+                <ScalarProperty Name="invitational_id" ColumnName="invitational_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_logs">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_logs">
+              <MappingFragment StoreEntitySet="tb_logs">
+                <ScalarProperty Name="DateTimeLogged" ColumnName="DateTimeLogged" />
+                <ScalarProperty Name="LogMessage" ColumnName="LogMessage" />
+                <ScalarProperty Name="log_id" ColumnName="log_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_processes">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_processes">
+              <MappingFragment StoreEntitySet="tb_processes">
+                <ScalarProperty Name="Messages" ColumnName="Messages" />
+                <ScalarProperty Name="ProcessEnd" ColumnName="ProcessEnd" />
+                <ScalarProperty Name="ProcessStart" ColumnName="ProcessStart" />
+                <ScalarProperty Name="process_id" ColumnName="process_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_racers">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_racers">
+              <MappingFragment StoreEntitySet="tb_racers">
+                <ScalarProperty Name="StreamURL" ColumnName="StreamURL" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DiscordID" ColumnName="DiscordID" />
+                <ScalarProperty Name="RacerLogin" ColumnName="RacerLogin" />
+                <ScalarProperty Name="RacerName" ColumnName="RacerName" />
+                <ScalarProperty Name="RacerGUID" ColumnName="RacerGUID" />
+                <ScalarProperty Name="old_racer_id" ColumnName="old_racer_id" />
+                <ScalarProperty Name="racer_id" ColumnName="racer_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_rankings">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_rankings">
+              <MappingFragment StoreEntitySet="tb_rankings">
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="Change" ColumnName="Change" />
+                <ScalarProperty Name="Ranking" ColumnName="Ranking" />
+                <ScalarProperty Name="race_id" ColumnName="race_id" />
+                <ScalarProperty Name="flag_id" ColumnName="flag_id" />
+                <ScalarProperty Name="racer_id" ColumnName="racer_id" />
+                <ScalarProperty Name="ranking_id" ColumnName="ranking_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_rankings_cache">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_rankings_cache">
+              <MappingFragment StoreEntitySet="tb_rankings_cache">
+                <ScalarProperty Name="Forfeits" ColumnName="Forfeits" />
+                <ScalarProperty Name="Thirds" ColumnName="Thirds" />
+                <ScalarProperty Name="Seconds" ColumnName="Seconds" />
+                <ScalarProperty Name="Firsts" ColumnName="Firsts" />
+                <ScalarProperty Name="TotalRaces" ColumnName="TotalRaces" />
+                <ScalarProperty Name="GainLoss" ColumnName="GainLoss" />
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="Ranking" ColumnName="Ranking" />
+                <ScalarProperty Name="RacerName" ColumnName="RacerName" />
+                <ScalarProperty Name="racer_id" ColumnName="racer_id" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="flag_id" ColumnName="flag_id" />
+                <ScalarProperty Name="cache_id" ColumnName="cache_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_schedule">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_schedule">
+              <MappingFragment StoreEntitySet="tb_schedule">
+                <ScalarProperty Name="SeedOrder" ColumnName="SeedOrder" />
+                <ScalarProperty Name="ScheduleGroup" ColumnName="ScheduleGroup" />
+                <ScalarProperty Name="flag_id" ColumnName="flag_id" />
+                <ScalarProperty Name="schedule_id" ColumnName="schedule_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_seed_tracking">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_seed_tracking">
+              <MappingFragment StoreEntitySet="tb_seed_tracking">
+                <ScalarProperty Name="DownloadDateTime" ColumnName="DownloadDateTime" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="seed_id" ColumnName="seed_id" />
+                <ScalarProperty Name="tracking_id" ColumnName="tracking_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_seeds">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_seeds">
+              <MappingFragment StoreEntitySet="tb_seeds">
+                <ScalarProperty Name="SeedHash" ColumnName="SeedHash" />
+                <ScalarProperty Name="race_id" ColumnName="race_id" />
+                <ScalarProperty Name="seed_id" ColumnName="seed_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_spoilers">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_spoilers">
+              <MappingFragment StoreEntitySet="tb_spoilers">
+                <ScalarProperty Name="FileLocation" ColumnName="FileLocation" />
+                <ScalarProperty Name="SpoilerHash" ColumnName="SpoilerHash" />
+                <ScalarProperty Name="race_id" ColumnName="race_id" />
+                <ScalarProperty Name="spoiler_id" ColumnName="spoiler_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_CacheRankings" FunctionName="ALTTPR_Ladder_DEVModel.Store.sp_CacheRankings" />
+          <FunctionImportMapping FunctionImportName="sp_CalculateRankings" FunctionName="ALTTPR_Ladder_DEVModel.Store.sp_CalculateRankings" />
+          <FunctionImportMapping FunctionImportName="sp_ProcessDecay" FunctionName="ALTTPR_Ladder_DEVModel.Store.sp_ProcessDecay" />
+          <EntitySetMapping Name="tb_gainpercentages">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_gainpercentages">
+              <MappingFragment StoreEntitySet="tb_gainpercentages">
+                <ScalarProperty Name="GainPerc" ColumnName="GainPerc" />
+                <ScalarProperty Name="RacerCount" ColumnName="RacerCount" />
+                <ScalarProperty Name="gain_id" ColumnName="gain_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_races">
+            <EntityTypeMapping TypeName="ALTTPR_Ladder_DEVModel.tb_races">
+              <MappingFragment StoreEntitySet="tb_races">
+                <ScalarProperty Name="ChampionshipRace" ColumnName="ChampionshipRace" />
+                <ScalarProperty Name="HasBeenProcessed" ColumnName="HasBeenProcessed" />
+                <ScalarProperty Name="HasCompleted" ColumnName="HasCompleted" />
+                <ScalarProperty Name="HasStarted" ColumnName="HasStarted" />
+                <ScalarProperty Name="MysteryJSON" ColumnName="MysteryJSON" />
+                <ScalarProperty Name="SeedURL" ColumnName="SeedURL" />
+                <ScalarProperty Name="RaceStartTime" ColumnName="RaceStartTime" />
+                <ScalarProperty Name="StartDateTime" ColumnName="StartDateTime" />
+                <ScalarProperty Name="Schedule" ColumnName="Schedule" />
+                <ScalarProperty Name="grabbag_id" ColumnName="grabbag_id" />
+                <ScalarProperty Name="flag_id" ColumnName="flag_id" />
+                <ScalarProperty Name="RaceGUID" ColumnName="RaceGUID" />
+                <ScalarProperty Name="race_id" ColumnName="race_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

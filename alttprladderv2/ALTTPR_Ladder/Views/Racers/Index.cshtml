@@ -1,0 +1,127 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "ALTTPR Ladder - Racers";
+    int i = 0; 
+}
+
+<div class="row">
+    <div class="racer-header-div">
+        <h2>@Model.RacerName.ToUpper() <a target="_blank" href="/racers/stream/@Model.RacerGUID" style="display: @(Model.StreamURL == "" ? "none" : "")"><img style="width: 26px; padding-bottom: 5px; margin-left: 10px;" src="~/Images/streaming.png" /></a></h2>
+        @if (Model.old_racer_id != null)
+        {
+            <h6><a target="_blank" href="https://archive.alttprladder.com/racers/index/@Model.old_racer_id">VIEW ARCHIVE STATS</a></h6>
+        }
+    </div>
+
+    <div class="racer-lower-div">
+        <div class="racer-upper-div" id="racer-upper-div">
+        </div>
+
+        <div class="racer-lower-left-div">
+            <div class="racer-stats-header-div">
+                LIFETIME RACE STATS
+            </div>
+            <table style="width: 100%;">
+                <thead>
+                    <tr style="background-color: #2a292f; border-bottom-width: var(--bs-border-width);">
+                        <th class="standings-table-object">
+                            MODE
+                        </th>
+                        <th class="standings-table-object">
+                            RANK
+                        </th>
+                        <th class="standings-table-object">
+                            RANKING
+                        </th>
+                        <th class="standings-table-object">
+                            TOTAL
+                        </th>
+                        <th class="standings-table-object">
+                            FIRSTS
+                        </th>
+                        <th class="standings-table-object">
+                            SECONDS
+                        </th>
+                        <th class="standings-table-object">
+                            THIRDS
+                        </th>
+                        <th class="standings-table-object">
+                            FORFEITS
+                        </th>
+                        <th class="standings-table-object">
+                            FASTEST
+                        </th>
+                        <th class="standings-table-object">
+                            AVERAGE
+                        </th>
+                        <th class="standings-table-object">
+                            DETAILS
+                        </th>
+                    </tr>
+                </thead>
+
+                @{ i = 0; }
+
+                @if (Model.Rankings != null)
+                {
+                    foreach (var item in @Model.Rankings)
+                    {
+                        var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+                        <tr style="@background; border-bottom-width: var(--bs-border-width); font-weight: @(item.flag_id == 0 ? "bold" : "normal");">
+                            <td>
+                                @if (item.flag_id == 0)
+                                {@item.FlagName }
+                            else
+                            { <a href="/rankings/index/@item.flag_id">@item.FlagName</a>}
+                            </td>
+                            <td>
+                                @if (item.flag_id != 0)
+                                {@item.Rank}
+                            </td>
+                            <td>
+                                @if (item.flag_id != 0)
+                                {@item.Ranking}
+                            </td>
+                            <td>
+                                @item.TotalRaces
+                            </td>
+                            <td>
+                                @item.Firsts
+                            </td>
+                            <td>
+                                @item.Seconds
+                            </td>
+                            <td>
+                                @item.Thirds
+                            </td>
+                            <td>
+                                @item.Forfeits
+                            </td>
+                            <td>
+                                @if (item.Average != "0")
+                                {<a href="/schedule/racedetails/@item.FastestGUID">@item.Fastest</a>}
+                            </td>
+                            <td>
+                                @if (item.Fastest != "0")
+                                {@item.Average}
+                            </td>
+                            <td style="padding-left: 20px;">
+                                @if (item.flag_id != 0)
+                                {<img onclick="LoadStats('@Model.RacerGUID', @item.flag_id)" src="~/Images/graph.png" style="height: 32px; cursor: pointer;" />}
+                                
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function LoadStats(r, f) {
+        $('#racer-upper-div').load('/Racers/RaceStats?r=' + r + '&f=' + f);
+    }
+</script>

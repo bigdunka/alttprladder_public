@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="529f80b14c43403c86f3d7fb8a161d0a" Name="Diagram1">
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_api_requests" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_branches" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_browse_logs" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_decay" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_entrants" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_flags" Width="1.5" PointX="4.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_invitational_pairings" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_invitational_participants" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_invitationals" Width="1.5" PointX="6.75" PointY="6.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_logs" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_processes" Width="1.5" PointX="2.75" PointY="8.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_racers" Width="1.5" PointX="8.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_rankings" Width="1.5" PointX="4.75" PointY="9.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_rankings_cache" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_schedule" Width="1.5" PointX="10.75" PointY="5.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_seed_tracking" Width="1.5" PointX="10.75" PointY="8.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_seeds" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_spoilers" Width="1.5" PointX="10.75" PointY="11.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_gainpercentages" Width="1.5" PointX="7.375" PointY="12.75" />
+        <EntityTypeShape EntityType="ALTTPR_Ladder_DEVModel.tb_races" Width="1.5" PointX="13.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

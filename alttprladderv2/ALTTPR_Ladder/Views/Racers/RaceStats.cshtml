@@ -1,0 +1,109 @@
+﻿@{
+    Layout = null;
+    int i = 0;
+}
+
+<div>
+    @if (Model.RankingsHistory != null)
+    {
+        var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+        <div class="racer-stats-header-div">
+            @Model.FlagName.ToUpper() RACE STATS
+        </div>
+        <table style="width: 100%;">
+            <thead>
+                <tr style="background-color: #2a292f; border-bottom-width: var(--bs-border-width);">
+                    <th class="standings-table-object">
+                        RACE
+                    </th>
+                    <th class="standings-table-object">
+                        DATE
+                    </th>
+                    <th class="standings-table-object">
+                        FINISH
+                    </th>
+                    <th class="standings-table-object">
+                        RESULT
+                    </th>
+                    <th class="standings-table-object">
+                        RACERS
+                    </th>
+                    <th class="standings-table-object">
+                        RANKING
+                    </th>
+                    <th class="standings-table-object">
+                        CHANGE
+                    </th>
+                </tr>
+            </thead>
+
+            @foreach (var race in Model.RankingsHistory)
+            {
+                if (race.RaceName != "")
+                {
+                    <tr style="@background; border-bottom-width: var(--bs-border-width);">
+                        <td>
+                            @if (race.race_id == -1)
+                            {
+                                <span>DECAY</span>
+                            }
+                            else
+                            {
+                                <a href="/schedule/racedetails/@race.RaceGUID">#@race.RaceName</a>
+                            }
+                        </td>
+                        <td>
+                            <span id="utc-span-@i">@race.UTCStartTime</span>
+                        </td>
+                        <td>
+                            @if (race.race_id != -1)
+                            {
+                                @race.FinishTime
+                            }
+                        </td>
+                        <td>
+                            @if (race.race_id != -1)
+                            {
+                                @(race.Result != "999th" ? @race.Result : "FF")
+                            }
+                        </td>
+                        <td>
+                            @if (race.race_id != -1)
+                            {
+                                @race.TotalCount
+                            }
+                        </td>
+                        <td>
+                            @if (race.race_id != -1)
+                            {
+                                @race.Ranking
+                            }
+                        </td>
+                        <td style="color: @(race.Change > 0 ? "green" : race.Change < 0 ? "red" : "white");">
+                            @(race.Change > 0 ? "+" + race.Change : race.Change)
+                        </td>
+                    </tr>
+                    i++;
+                }
+            }
+        </table>
+    }
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        ConvertFromUTC();
+    });
+
+    function ConvertFromUTC() {
+        var spans = document.querySelectorAll("[id^=utc-span-]");
+
+        for (let i = 0; i < spans.length; ++i) {
+            ConvertSpanFromUTC(spans[i].id);
+        }
+    }
+</script>
+
+

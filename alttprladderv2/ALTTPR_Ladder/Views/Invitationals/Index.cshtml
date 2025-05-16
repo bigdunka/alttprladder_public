@@ -1,0 +1,444 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "ALTTPR Ladder - Invitationals";
+}
+
+<script>
+    function ChangeInvitational(x) {
+        document.location.href = '/invitationals/index/' + x;
+    }
+
+    function ChangeWeek(x) {
+        var maxj = @(Model.Week5.GroupA.Count > 0 ? "6" : (Model.Week4.GroupA.Count > 0 ? "5" : (Model.Week3.GroupA.Count > 0 ? "4" : (Model.Week2.GroupA.Count > 0 ? "3" : "2"))));
+
+        for (var j = 1; j < maxj; j++) {
+            document.getElementById("week" + j + "div").style.display = "none";
+            document.getElementById("week" + j + "tab").classList.remove("active");
+            document.getElementById("week" + j + "tab").classList.add("inactive");
+        }
+
+        document.getElementById("week" + x + "div").style.display = "";
+        document.getElementById("week" + x + "tab").classList.remove("inactive");
+        document.getElementById("week" + x + "tab").classList.add("active");
+    }
+
+</script>
+
+<div class="row" style="margin-top: 40px;">
+    <div style="width: 300px;">
+        @foreach (var il in Model.InvList)
+        {
+            <div class="inv-left-tab @(Model.ActiveID != il.invitational_id ? "inactive" : "active")" onclick="ChangeInvitational('@il.invitational_id');" >
+                @il.InvitationalName
+            </div>
+        }
+
+    </div>
+    <div class="inv-right-div">
+        <div>
+            <div id="week1tab" class="inv-top-tab@(Model.UseFiveWeeks ? "-20" : "") active" onclick="ChangeWeek(1);">
+                Week 1
+            </div>
+            @if (Model.Week2.GroupA.Count > 0)
+            {
+                <div id="week2tab" class="inv-top-tab@(Model.UseFiveWeeks ? "-20" : "") inactive" onclick="ChangeWeek(2);">
+                    Week 2
+                </div>
+            }
+            @if (Model.Week3.GroupA.Count > 0)
+            {
+                <div id="week3tab" class="inv-top-tab@(Model.UseFiveWeeks ? "-20" : "") inactive" onclick="ChangeWeek(3);">
+                    Week 3
+                </div>
+            }
+            @if (Model.Week4.GroupA.Count > 0)
+            {
+                <div id="week4tab" class="inv-top-tab@(Model.UseFiveWeeks ? "-20" : "") inactive" onclick="ChangeWeek(4);">
+                    @(Model.UseFiveWeeks ? "Week 4" : "Finals")
+                </div>
+            }
+            @if (Model.Week5 != null && Model.Week5.GroupA.Count > 0)
+            {
+                <div id="week5tab" class="inv-top-tab@(Model.UseFiveWeeks ? "-20" : "") inactive" onclick="ChangeWeek(5);">
+                    Finals
+                </div>
+            }
+        </div>
+        <br />
+        <br />
+        <div id="week1div">
+            <div class="inv-group-div">
+                <div class="inv-group-header">Group A</div>
+                @{
+                    int i = 0;
+                }
+                <table>
+                    @foreach (var ig in Model.Week1.GroupA)
+                    {
+                        var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+                        <tr style="@background">
+                            <td style="width: 500px">
+                                @ig.RaceResult
+                            </td>
+                            <td style="width: 180px">
+                                @if (Model.Week1.ResultsA.Count > i)
+                                {@Model.Week1.ResultsA[i].Racer}
+                            </td>
+                            <td style="width: 100px">
+                                @if (Model.Week1.ResultsA.Count > i)
+                                {<span>@Model.Week1.ResultsA[i].Wins - @Model.Week1.ResultsA[i].Losses</span>}
+                            </td>
+
+                        </tr>
+
+                        i++;
+                    }
+                </table>
+            </div>
+            <br />
+            <div class="inv-group-div">
+                <div class="inv-group-header">Group B</div>
+                @{
+                    i = 0;
+                }
+                <table>
+                    @foreach (var ig in Model.Week1.GroupB)
+                    {
+                        var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+                        <tr style="@background">
+                            <td style="width: 500px">
+                                @ig.RaceResult
+                            </td>
+                            <td style="width: 180px">
+                                @if (Model.Week1.ResultsB.Count > i)
+                                {@Model.Week1.ResultsB[i].Racer}
+                            </td>
+                            <td style="width: 100px">
+                                @if (Model.Week1.ResultsB.Count > i)
+                                {<span>@Model.Week1.ResultsB[i].Wins - @Model.Week1.ResultsB[i].Losses</span>}
+                            </td>
+                        </tr>
+
+                        i++;
+                    }
+                </table>
+            </div>
+            <br />
+            <div class="inv-group-div">
+                <div class="inv-group-header">Group C</div>
+                @{
+                    i = 0;
+                }
+                <table>
+                    @foreach (var ig in Model.Week1.GroupC)
+                    {
+                        var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+                        <tr style="@background">
+                            <td style="width: 500px">
+                                @ig.RaceResult
+                            </td>
+                            <td style="width: 180px">
+                                @if (Model.Week1.ResultsC.Count > i)
+                                {@Model.Week1.ResultsC[i].Racer}
+                            </td>
+                            <td style="width: 100px">
+                                @if (Model.Week1.ResultsC.Count > i)
+                                {<span>@Model.Week1.ResultsC[i].Wins - @Model.Week1.ResultsC[i].Losses</span>}
+                            </td>
+                        </tr>
+
+                        i++;
+                    }
+                </table>
+            </div>
+            <br />
+            <div class="inv-group-div">
+                <div class="inv-group-header">Group D</div>
+                @{
+                    i = 0;
+                }
+                <table>
+                    @foreach (var ig in Model.Week1.GroupD)
+                    {
+                        var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+                        <tr style="@background">
+                            <td style="width: 500px">
+                                @ig.RaceResult
+                            </td>
+                            <td style="width: 180px">
+                                @if (Model.Week1.ResultsD.Count > i)
+                                {@Model.Week1.ResultsD[i].Racer}
+                            </td>
+                            <td style="width: 100px">
+                                @if (Model.Week1.ResultsD.Count > i)
+                                {<span>@Model.Week1.ResultsD[i].Wins - @Model.Week1.ResultsD[i].Losses</span>}
+                            </td>
+                        </tr>
+
+                        i++;
+                    }
+                </table>
+            </div>
+        </div>
+
+        <div id="week2div" style="display: none;">
+            <div class="inv-group-div">
+                <div class="inv-group-header">Group A</div>
+                @{
+                    i = 0;
+                }
+                <table>
+                    @foreach (var ig in Model.Week2.GroupA)
+                    {
+                        var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+                        <tr style="@background">
+                            <td style="width: 500px">
+                                @ig.RaceResult
+                            </td>
+                            <td style="width: 180px">
+                                @if (Model.Week2.ResultsA.Count > i)
+                                {@Model.Week2.ResultsA[i].Racer}
+                            </td>
+                            <td style="width: 100px">
+                                @if (Model.Week2.ResultsA.Count > i)
+                                {<span>@Model.Week2.ResultsA[i].Wins - @Model.Week2.ResultsA[i].Losses</span>}
+                            </td>
+                        </tr>
+
+                        i++;
+                    }
+                </table>
+            </div>
+            <br />
+            <div class="inv-group-div">
+                <div class="inv-group-header">Group B</div>
+                @{
+                    i = 0;
+                }
+                <table>
+                    @foreach (var ig in Model.Week2.GroupB)
+                    {
+                        var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+                        <tr style="@background">
+                            <td style="width: 500px">
+                                @ig.RaceResult
+                            </td>
+                            <td style="width: 180px">
+                                @if (Model.Week2.ResultsB.Count > i)
+                                {@Model.Week2.ResultsB[i].Racer}
+                            </td>
+                            <td style="width: 100px">
+                                @if (Model.Week2.ResultsB.Count > i)
+                                {<span>@Model.Week2.ResultsB[i].Wins - @Model.Week2.ResultsB[i].Losses</span>}
+                            </td>
+                        </tr>
+
+                        i++;
+                    }
+                </table>
+            </div>
+            @if (Model.UseFiveWeeks)
+            {
+                <br />
+                <div class="inv-group-div">
+                    <div class="inv-group-header">Group C</div>
+                    @{
+                        i = 0;
+                    }
+                    <table>
+                        @foreach (var ig in Model.Week2.GroupC)
+                        {
+                            var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+                            <tr style="@background">
+                                <td style="width: 500px">
+                                    @ig.RaceResult
+                                </td>
+                                <td style="width: 180px">
+                                    @if (Model.Week2.ResultsC.Count > i)
+                                    {@Model.Week2.ResultsC[i].Racer}
+                                </td>
+                                <td style="width: 100px">
+                                    @if (Model.Week2.ResultsC.Count > i)
+                                    {<span>@Model.Week2.ResultsC[i].Wins - @Model.Week2.ResultsC[i].Losses</span>}
+                                </td>
+                            </tr>
+
+                            i++;
+                        }
+                    </table>
+                </div>
+                <br />
+                <div class="inv-group-div">
+                    <div class="inv-group-header">Group D</div>
+                    @{
+                        i = 0;
+                    }
+                    <table>
+                        @foreach (var ig in Model.Week2.GroupD)
+                        {
+                            var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+                            <tr style="@background">
+                                <td style="width: 500px">
+                                    @ig.RaceResult
+                                </td>
+                                <td style="width: 180px">
+                                    @if (Model.Week2.ResultsD.Count > i)
+                                    {@Model.Week2.ResultsD[i].Racer}
+                                </td>
+                                <td style="width: 100px">
+                                    @if (Model.Week2.ResultsD.Count > i)
+                                    {<span>@Model.Week2.ResultsD[i].Wins - @Model.Week2.ResultsD[i].Losses</span>}
+                                </td>
+                            </tr>
+
+                            i++;
+                        }
+                    </table>
+                </div>
+            }
+        </div>
+
+        <div id="week3div" style="display: none;">
+            <div class="inv-group-div">
+                <div class="inv-group-header">Group A</div>
+                @{
+                    i = 0;
+                }
+                <table>
+                    @foreach (var ig in Model.Week3.GroupA)
+                    {
+                        var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+                        <tr style="@background">
+                            <td style="width: 500px">
+                                @ig.RaceResult
+                            </td>
+                            <td style="width: 180px">
+                                @if (Model.Week3.ResultsA.Count > i)
+                                {@Model.Week3.ResultsA[i].Racer}
+                            </td>
+                            <td style="width: 100px">
+                                @if (Model.Week3.ResultsA.Count > i)
+                                {<span>@Model.Week3.ResultsA[i].Wins - @Model.Week3.ResultsA[i].Losses</span>}
+                            </td>
+                        </tr>
+
+                        i++;
+                    }
+                </table>
+            </div>
+
+            @if (Model.UseFiveWeeks)
+            {
+                <br />
+                <div class="inv-group-div">
+                    <div class="inv-group-header">Group B</div>
+                    @{
+                        i = 0;
+                    }
+                    <table>
+                        @foreach (var ig in Model.Week3.GroupB)
+                        {
+                            var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+                            <tr style="@background">
+                                <td style="width: 500px">
+                                    @ig.RaceResult
+                                </td>
+                                <td style="width: 180px">
+                                    @if (Model.Week3.ResultsB.Count > i)
+                                    {@Model.Week3.ResultsB[i].Racer}
+                                </td>
+                                <td style="width: 100px">
+                                    @if (Model.Week3.ResultsB.Count > i)
+                                    {<span>@Model.Week3.ResultsB[i].Wins - @Model.Week3.ResultsB[i].Losses</span>}
+                                </td>
+                            </tr>
+
+                            i++;
+                        }
+                    </table>
+                </div>
+            }
+        </div>
+
+        <div id="week4div" style="display: none;">
+            <div class="inv-group-div">
+                <div class="inv-group-header">@(Model.UseFiveWeeks ? "Week 4" : "Finals")</div>
+                @{
+                    i = 0;
+                }
+                <table>
+                    @foreach (var ig in Model.Week4.GroupA)
+                    {
+                        var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+                        <tr style="@background">
+                            <td style="width: 500px">
+                                @ig.RaceResult
+                            </td>
+                            <td style="width: 180px">
+                                @if (Model.Week4.ResultsA.Count > i)
+                                {@Model.Week4.ResultsA[i].Racer}
+                            </td>
+                            <td style="width: 100px">
+                                @if (Model.Week4.ResultsA.Count > i)
+                                {<span>@Model.Week4.ResultsA[i].Wins - @Model.Week4.ResultsA[i].Losses</span>}
+                            </td>
+                        </tr>
+
+                        i++;
+                    }
+                </table>
+            </div>
+        </div>
+
+        @if (Model.UseFiveWeeks)
+        {
+            <div id="week5div" style="display: none;">
+                <div class="inv-group-div">
+                    <div class="inv-group-header">Finals</div>
+                    @{
+                        i = 0;
+                    }
+                    <table>
+                        @foreach (var ig in Model.Week5.GroupA)
+                        {
+                            var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+                            <tr style="@background">
+                                <td style="width: 500px">
+                                    @ig.RaceResult
+                                </td>
+                                <td style="width: 180px">
+                                    @if (Model.Week5.ResultsA.Count > i)
+                                    {@Model.Week5.ResultsA[i].Racer}
+                                </td>
+                                <td style="width: 100px">
+                                    @if (Model.Week5.ResultsA.Count > i)
+                                    {<span>@Model.Week5.ResultsA[i].Wins - @Model.Week5.ResultsA[i].Losses</span>}
+                                </td>
+                            </tr>
+
+                            i++;
+                        }
+                    </table>
+                </div>
+            </div>
+        }
+
+
+    </div>
+
+
+
+
+</div>

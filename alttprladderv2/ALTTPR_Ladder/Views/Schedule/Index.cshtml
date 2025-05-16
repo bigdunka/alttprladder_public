@@ -1,0 +1,104 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "ALTTPR Ladder - Schedule";
+}
+
+<div class="row" style="margin-top: 40px;">
+    <div class="calendar-wrapper-div">
+        <div class="calendar-left-div">
+            <div class="calendar-left-month-div" style="cursor: pointer;" onclick="ChangeMonth(@(Model.Month == 1 ? 12 : Model.Month - 1), @(Model.Month == 1 ? Model.Year - 1 : Model.Year));">
+                <div class="calendar-left-month-header-div">
+                    <div>@System.Globalization.DateTimeFormatInfo.CurrentInfo.GetMonthName(Model.Month - 1 == 0 ? 12 : Model.Month - 1).ToUpper()</div>
+                    <img style="height: 90px; margin-top: 10px;" src="~/Images/calendar.png" />
+                </div>
+            </div>
+            <div class="calendar-left-month-div">
+                <div class="calendar-left-month-header-div">
+                    <div>@System.Globalization.DateTimeFormatInfo.CurrentInfo.GetMonthName(Model.Month).ToUpper()</div>
+                    <img style="height: 90px; margin-top: 10px;" src="~/Images/calendar.png" />
+                </div>
+            </div>
+            <div class="calendar-left-month-div" style="cursor: pointer;" onclick="ChangeMonth(@(Model.Month == 12 ? 1 : Model.Month + 1), @(Model.Month == 12 ? Model.Year + 1 : Model.Year));">
+                <div class="calendar-left-month-header-div">
+                    <div>@System.Globalization.DateTimeFormatInfo.CurrentInfo.GetMonthName(Model.Month + 1).ToUpper()</div>
+                    <img style="height: 90px; margin-top: 10px;" src="~/Images/calendar.png" />
+                </div>
+            </div>
+        </div>
+
+        <div class="calendar-right-div">
+            <div class="calendar-right-header-div">
+                <div class="calendar-right-header-week-div" style="cursor: pointer;" onclick="ChangeWeek(@(Model.Week - 1), @(Model.Year));">▲ PREVIOUS WEEK</div><div class="calendar-right-header-week-div" style="cursor: pointer;" onclick="ResetWeek();">JUMP TO TODAY</div><div class="calendar-right-header-week-div" style="cursor: pointer;" onclick="ChangeWeek(@(Model.Week + 1), @(Model.Year));">NEXT WEEK ▼</div>
+            </div>
+
+            @for (int i = 0; i < 7; i++)
+            {
+                string dayofweek = Model.CalendarWeek[i].Day.DayOfWeek.ToString();
+
+                <div class="calendar-right-day-div">
+                    <div class="calendar-right-day-header-div">@dayofweek.ToUpper()<br /><span>@Model.CalendarWeek[i].Day.ToString("yyyy-MM-dd")</span></div>
+                    @for (int j = 0; j < 12; j++)
+                    {
+                        <div id="day-@i-@j" class="calendar-right-day-content-div" style="cursor: pointer;"></div>
+                    }
+                </div>
+            }
+        <div class="calendar-right-header-div" style="float: left;">
+            <div class="calendar-right-header-week-div">ALL TIMES LOCAL</div><div class="calendar-right-header-week-div">&nbsp;</div><div class="calendar-right-header-week-div">* CHAMPIONSHIP QUALIFIER</div>
+        </div>
+            <div style="text-align: center;">
+                <a style="font-size: 18px; margin-top: 40px;" href="https://calendar.google.com/calendar/u/0?cid=YWx0dHBybGFkZGVyQGdtYWlsLmNvbQ" target="_blank">VIEW IN GOOGLE CALENDAR</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var racejson = JSON.parse(@Html.Raw(Json.Encode(@Model.RaceJSON)));
+    var startingdate = new Date('@Model.CalendarWeek[0].Day.ToString("M-d-yyyy")');
+    var endingdate = new Date('@Model.CalendarWeek[6].Day.AddDays(1).ToString("M-d-yyyy")');
+
+    $(document).ready(function () {
+        var currentday = 0;
+        var currentcount = 0;
+
+        for (let i = 0; i < racejson.length; i++) {
+            let race = racejson[i];
+            var d = new Date(0);
+            d.setUTCSeconds(race.UTCStartTicks);
+            var racedate = new Date(d.toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }));
+
+            if (racedate >= startingdate && racedate < endingdate) {
+                while (currentday != racedate.getDay() && currentday < 7) {
+                    currentday++;
+                    currentcount = 0;
+                }
+
+                document.getElementById("day-" + racedate.getDay() + "-" + currentcount).innerHTML = race.FlagName + race.IsChampionship + '\r\n' + racedate.toLocaleString('en-US', { hour: 'numeric', hour12: true }) + '  [' + race.RaceName + ']';
+                document.getElementById("day-" + racedate.getDay() + "-" + currentcount).onclick = function () { NavigateToRace(race.RaceGUID); };
+                if (race.HasCompleted) {
+                    document.getElementById("day-" + racedate.getDay() + "-" + currentcount).classList.add("calendar-race-completed");
+                } else {
+                    document.getElementById("day-" + racedate.getDay() + "-" + currentcount).classList.add("calendar-race-" + race.FlagName.toLowerCase().replace(/\W/g, ''));
+                }
+                currentcount++;
+            }
+        }
+    });
+
+    function ResetWeek() {
+        document.location.href = '/schedule/index/';
+    }
+
+    function ChangeWeek(w, y) {
+        document.location.href = '/schedule/index?w=' + w + '&y=' + y;
+    }
+
+    function ChangeMonth(m, y) {
+        document.location.href = '/schedule/index?m=' + m + '&y=' + y;
+    }
+
+    function NavigateToRace(x) {
+        document.location.href = '/schedule/racedetails/' + x;
+    }
+</script>

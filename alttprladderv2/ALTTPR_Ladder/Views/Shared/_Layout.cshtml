@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/helpers.js"></script>
+    <link rel="icon" href="https://alttprladder.com/favicon.ico?v=2" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1RD73NTTV0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-1RD73NTTV0');</script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="~/" class="navbar-brand"><img style="height: 44px; margin-top: -12px;" src="~/Images/ladder.png" />&nbsp;&nbsp;&nbsp;<span class="header-white">ALTTPR</span> <span class="header-orange">LADDER</span></a>
+            </div>
+            <div class="navbar-menu">
+                <div class="navbar-div">
+                    <a href="https://discord.gg/WQu32syJFy" target="_blank"><img src="~/Images/discordicon.png" class="navbar-image" /><br /><span class="navbar-small">DISCORD</span></a>
+                </div>
+                <div class="navbar-div">
+                    <a href="https://twitch.tv/alttprladder" target="_blank"><img src="~/Images/twitch.png" class="navbar-image" /><br /><span class="navbar-small">TWITCH</span></a>
+                </div>
+                <div class="navbar-div">
+                    <a href="https://youtube.com/&#64;alttprladder" target="_blank"><img src="~/Images/youtube.png" class="navbar-image" /><br /><span class="navbar-small">YOUTUBE</span></a>
+                </div>
+                <div class="navbar-div">
+                    <a href="https://patreon.com/randoladders" target="_blank"><img src="~/Images/patreon.png" class="navbar-image" /><br /><span class="navbar-small">PATREON</span></a>
+                </div>
+                <div class="navbar-div">
+                    <a href="https://archive.alttprladder.com" target="_blank"><img src="~/Images/ladderold.png" class="navbar-image" /><br /><span class="navbar-small">ARCHIVE</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar-subheader">
+        <div style="max-width: 1320px; margin: 0 auto 0 auto;">
+            <div class="navbar-subheader-div">
+                <a href="~/"><span class="navbar-subheader-text">HOME</span></a>
+            </div>
+            <div class="navbar-subheader-div">
+                <a href="~/rankings/index"><span class="navbar-subheader-text">RANKINGS</span></a>
+            </div>
+            <div class="navbar-subheader-div">
+                <a href="~/invitationals/index"><span class="navbar-subheader-text">INVITATIONALS</span></a>
+            </div>
+            <div class="navbar-subheader-div">
+                <a href="~/schedule/index"><span class="navbar-subheader-text">SCHEDULE</span></a>
+            </div>
+            <div class="navbar-subheader-div">
+                <a href="https://archive.alttprladder.com/home/random" target="_blank"><span class="navbar-subheader-text">RANDOM</span></a>
+            </div>
+            <div class="navbar-subheader-div">
+                <a target="_blank" href="https://docs.google.com/document/d/1ElnLgedHPbDjXZ3sjyt6hFMG_cPiGUGZx3DEduc9hEM"><span class="navbar-subheader-text">FAQ</span></a>
+            </div>
+        </div>
+    </div>
+    <div class="navbar-divider">
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <footer style="text-align: right; font-size: 11px; color: #ffffff3d; margin-top: 100px;">
+            <p>Dunka Games &copy; @DateTime.Now.Year</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

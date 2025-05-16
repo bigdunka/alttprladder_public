@@ -1,0 +1,225 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "ALTTPR Ladder - Home";
+    int i = 0;
+    bool starttimer = Model.CurrentRace != null;
+}
+
+<div class="row" style="margin-top: 40px;">
+    @if (Model.CurrentRace != null)
+    {
+        <div class="home-current-race-div">
+            <div class="home-current-race-header-div">
+                Race: @Model.CurrentRace.RaceName - [<span id="current-timer-span"></span>] - Mode: @Model.CurrentRace.RaceMode - Total Racers: @Model.CurrentRace.RacerCount - Currently Racing: @Model.CurrentRace.CurrentlyRacing
+            </div>
+
+            <div id="home-current-race-standings-div" class="home-current-race-standings-div">
+            </div>
+
+            <div class="home-current-race-video-div">
+                <div id="twitch-player-div">
+                    <div class="home-video-under-div">CLICK &#9654; FROM THE RACER LIST TO PLAY LIVE STREAM</div>
+                </div>
+            </div>
+        </div>
+    } 
+
+    <div class="home-lower-div">
+        <div class="home-lower-left-div">
+            <div class="home-current-race-header-div">
+                CURRENT RACES (ALL TIMES LOCAL)
+            </div>
+            <table style="width: 100%">
+                <thead>
+                    <tr style="background-color: #2a292f; border-bottom-width: var(--bs-border-width);">
+                        <th style="padding-left: 20px;" class="standings-table-object">
+                            MODE
+                        </th>
+                        <th class="standings-table-object">
+                            START TIME
+                        </th>
+                    </tr>
+                </thead>
+
+                @{ i = 0; }
+
+                @if (Model.NextRaces != null)
+                {
+                    foreach (var item in @Model.NextRaces)
+                    {
+                        var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+                        <tr style="@background; border-bottom-width: var(--bs-border-width);">
+                            <td style="width: 300px; padding-left: 20px;">
+                                <a href="/rankings/index/@item.flag_id">@item.FlagName</a>
+                            </td>
+                            <td style="width: 200px">
+                                @if (item.Status == "SCHEDULED")
+                                {
+                                    <a href="/schedule/racedetails/@item.RaceGUID"><span id="utc-span-@i">@item.UTCTime</span></a>   
+                                }
+                                else
+                                {
+                                    <a href="/schedule/racedetails/@item.RaceGUID">@item.Status</a>
+                                }
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+            </table>
+        </div>
+
+        <div class="home-lower-right-div">
+            <div class="home-current-race-header-div">
+                LEADERBOARDS
+            </div>
+            <table style="width: 100%">
+                @if (Model.Standings != null && Model.Standings.Count > 2)
+                {
+                    for (int j = 0; j < Model.Standings.Count; j++)
+                    {
+                        i = 0;
+                        <thead id="standings-header-@j.ToString()" style="display:none">
+                            <tr style="background-color: #00004D; border-bottom-width: var(--bs-border-width);">
+                                <th style="width: 33%; text-align: center; font-size: 10px; cursor: pointer;" onclick="SwitchStandings(@(j > 0 ? (j - 1).ToString() : (Model.Standings.Count - 1).ToString()));">
+                                    << @Model.Standings[(j > 0 ? j - 1 : Model.Standings.Count - 1)].RaceMode
+                                </th>
+                                <th style="width: 33%; text-align: center;">
+                                    @Model.Standings[j].RaceMode
+                                </th>
+                                <th style="width: 33%; text-align: center; font-size: 10px; cursor: pointer;" onclick="SwitchStandings(@(j == Model.Standings.Count - 1 ? "0" : (j + 1).ToString()));">
+                                    @Model.Standings[(j == Model.Standings.Count - 1 ? 0 : j + 1)].RaceMode >>
+                                </th>
+                            </tr>
+                            <tr style="background-color: #2a292f; border-bottom-width: var(--bs-border-width);">
+                                <th style="padding-left: 20px;" class="standings-table-object">
+                                    RANK
+                                </th>
+                                <th class="standings-table-object">
+                                    RACER
+                                </th>
+                                <th class="standings-table-object" style="padding-left: 50px;">
+                                    RANKING
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="standings-table-@j.ToString()" style="display: none">
+                            @foreach (var item in Model.Standings[j].RacerStandings)
+                            {
+                                var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+                                <tr style="@background; border-bottom-width: var(--bs-border-width);">
+                                    <td style="width: 33%; padding-left: 20px;">
+                                        @item.Rank
+                                    </td>
+                                    <td style="width: 33%">
+                                        <a href="~/racers/index/@item.RacerGUID">@item.Racer</a>
+                                    </td>
+                                    <td style="width: 33%; padding-left: 50px;">
+                                        @item.Ranking
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                            <tr style="background-color: #00004D; border-bottom-width: var(--bs-border-width);">
+                                <td colspan="3" style="text-align: center;">
+                                    <a href="~/rankings/index/@Model.Standings[j].flag_id" style="color: #dedede; font-weight: bold;">VIEW FULL RANKINGS</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://player.twitch.tv/js/embed/v1.js"></script>
+<script type="text/javascript">
+
+    var StartTime = @(Model.CurrentRace != null ? Model.CurrentRace.UTCStartTicks : 0) ;
+    var CurrentTime = Math.round(Date.now() / 1000);
+
+    console.log(StartTime);
+    console.log(CurrentTime);
+
+    $(document).ready(function () {
+        if ('@starttimer' == 'True') {
+            SetTimer();
+            if (Number.isNaN(StartTime) == false) {
+                setInterval(IncrementTimer, 1000);
+            }
+            setInterval(ReloadStandings, 30000);
+            ReloadStandings();
+        }
+
+        document.getElementById("standings-header-0").style.display = "";
+        document.getElementById("standings-table-0").style.display = "";
+
+        ConvertFromUTC();
+    });
+
+    function ConvertFromUTC() {
+        var spans = document.querySelectorAll("[id^=utc-span-]");
+
+        for (let i = 0; i < spans.length; ++i) {
+            ConvertSpanFromUTC(spans[i].id);
+        }
+    }
+
+    function SwitchStream(x, g) {
+        document.getElementById('twitch-player-div').innerHTML = '';
+            var options = {
+            width: 800,
+            height: 450,
+            channel: x,
+            autoplay: true,
+            muted: true
+        };
+        var player = new Twitch.Player("twitch-player-div", options);
+        $('#race-switch-div').load('../Home/SwitchStream/' + g);
+    }
+
+    function IncrementTimer() {
+        SetTimer();
+    }
+
+    function SetTimer() {
+        if (Number.isNaN(StartTime) || StartTime == 0) {
+            document.getElementById('current-timer-span').innerHTML = "";
+        } else {
+            var CurrentTime = Math.round(Date.now() / 1000);
+            var TimerTime = CurrentTime - StartTime;
+
+            if (TimerTime < 0) {
+                TimerTime = 0;
+            }
+
+            var h; var m; var s;
+
+            h = (Math.floor(TimerTime / 3600)).toString();
+            m = (Math.floor((TimerTime % 3600) / 60)).toString();
+            s = (TimerTime % 60).toString();
+
+            if (m.length == 1) { m = "0" + m.toString(); }
+            if (s.length == 1) { s = "0" + s.toString(); }
+
+            document.getElementById('current-timer-span').innerHTML = h + ':' + m + ':' + s;
+        }
+    }
+
+    function SwitchStandings(x) {
+        for (var i = 0; i < @(Model.Standings != null ? Model.Standings.Count : 0); i++) {
+            document.getElementById("standings-header-" + i).style.display = "none";
+            document.getElementById("standings-table-" + i).style.display = "none";
+        }
+        document.getElementById("standings-header-" + x).style.display = "";
+        document.getElementById("standings-table-" + x).style.display = "";
+    }
+
+    function ReloadStandings() {
+        $('#home-current-race-standings-div').load('../Home/LiveStandings/');
+    }
+</script>

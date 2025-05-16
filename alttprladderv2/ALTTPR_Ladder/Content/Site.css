@@ -1,0 +1,484 @@
+﻿body {
+    font-family: "Kumbh Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    background-color: #383838;
+    color: #dedede;
+    padding-bottom: 20px;
+}
+
+a {
+    color: #d9d9d9;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.navbar {
+    background-color: #2c2c2c;
+}
+
+.navbar-menu {
+    font-size: 24px;
+    color: #dedede;
+    width: 350px;
+}
+
+.navbar-menu a {
+color: #dedede;
+}
+
+.navbar-menu a:hover {
+    color: #aaa;
+}
+
+.header-orange {
+    font-size: 34px;
+    color: #ef7221;
+}
+
+.header-white {
+    font-size: 34px;
+    color: #efefef;
+}
+
+.navbar-divider {
+    background-color: #ef7221;
+    height: 2px;
+}
+
+.navbar-div {
+    font-size: 10px;
+    width: 70px;
+    text-align: center;
+    float: left;
+    cursor: pointer;
+}
+
+.navbar-div a {
+    text-decoration: none;
+}
+
+.navbar-image {
+    height: 32px;
+    margin-bottom: 2px;
+}
+
+.navbar-subheader {
+    background-color: #00004D;
+    height: 40px;
+    padding-top: 4px;
+}
+
+.navbar-subheader a {
+    color: #dedede;
+    text-decoration: none;
+}
+
+.navbar-subheader-div {
+    width: 16%;
+    float: left;
+    text-align: center;
+}
+
+.navbar-subheader-text {
+    color: #dedede;
+    font-size: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.header-image {
+    height: 64px;
+}
+
+.schedule-days-div {
+    width: 160px;
+    height: 134px;
+    float: left;
+    border-width: 1px;
+    border-color: white;
+    border-style: solid;
+}
+
+.schedule-days-header-div {
+    width: 160px;
+    height: 30px;
+    float: left;
+    border-width: 1px;
+    border-color: white;
+    border-style: solid;
+    text-align: center;
+}
+
+.schedule-day-div {
+    text-align: right;
+    padding: 0px 4px 0px 2px;
+}
+
+.schedule-race-div {
+    font-size: 12px;
+    text-align: left;
+    padding: 0px 4px 0px 2px;
+    cursor: pointer;
+}
+
+.race-details-comment {
+    font-size: 10px;
+    color: mediumpurple;
+    cursor: pointer;
+}
+
+.inv-left-tab {
+    width: 300px;
+    padding: 10px;
+}
+
+.inv-left-tab.inactive {
+    cursor: pointer;
+}
+
+.inv-left-tab.active {
+    background-color: #646464;
+}
+
+.inv-right-div {
+    width: 800px;
+    margin: 0 auto 0 auto;
+}
+
+.inv-top-tab {
+    width: 25%;
+    padding: 5px;
+    float: left;
+    text-align: center;
+}
+
+.inv-top-tab-20 {
+    width: 20%;
+    padding: 5px;
+    float: left;
+    text-align: center;
+}
+
+.inv-top-tab.inactive {
+    cursor: pointer;
+}
+
+.inv-top-tab.active {
+    background-color: #646464;
+}
+
+.inv-top-tab-20.inactive {
+    cursor: pointer;
+}
+
+.inv-top-tab-20.active {
+    background-color: #646464;
+}
+
+.inv-group-div {
+    width: 780px;
+    border: 1px solid white;
+    margin: auto;
+}
+
+.inv-group-header {
+    background-color: #00004D;
+}
+
+.inv-group-item {
+    width: 100%;
+}
+
+.standings-right-div {
+    width: 900px;
+    margin: 0 auto 0 auto;
+}
+
+.standings-table-object {
+    color: #dedede !important;
+    background-color: #00000000 !important;
+}
+
+.home-current-race-div {
+    width: 100%;
+    margin-bottom: 30px;
+    background-color: #000;
+    padding: 2px;
+    height: 540px;
+}
+
+.home-current-race-header-div {
+    width: 100%;
+    text-align: center;
+    background-color: #00004D;
+}
+
+.home-current-race-standings-div {
+    float: left;
+    width: 450px;
+    max-height: 510px;
+    overflow-y: scroll;
+    min-height: 510px;
+    background-color: #222;
+}
+
+.home-current-race-video-div {
+    width: 800px;
+    margin: 30px 30px 0px 0px;
+    float: right;
+}
+
+.home-lower-div {
+    width: 100%;
+}
+
+.home-lower-left-div {
+    width: 45%;
+    float: left;
+    background-color: #464646;
+    padding: 2px;
+    min-height: 374px;
+    margin-left: 3%;
+}
+
+.home-lower-right-div {
+    width: 45%;
+    float: left;
+    margin-left: 3%;
+    background-color: #464646;
+    padding: 2px;
+    min-height: 374px;
+}
+
+.mystery-details {
+    display: none;
+}
+
+.details-header-div {
+    width: 100%;
+    text-align: center;
+    background-color: #00004D;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.details-table-header {
+    background-color: #2a292f;
+    text-align: center;
+}
+
+.calendar-wrapper-div {
+    width: 95%;
+    margin: auto;
+}
+
+.calendar-left-div {
+    height: 500px;
+    width: 150px;
+    float: left;
+    margin-top: 60px;
+}
+
+.calendar-left-month-div {
+    height: 140px;
+    width: 140px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.calendar-left-month-header-div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.calendar-right-div {
+    height: 554px;
+    width: 1050px;
+    background-color: #333;
+    float: left;
+}
+
+.calendar-right-header-div {
+    height: 25px;
+    width: 1050px;
+    background-color: #00004D;
+}
+
+.calendar-right-header-week-div {
+    float: left;
+    width: 33%;
+    text-align: center;
+}
+
+.calendar-right-day-div {
+    height: 530px;
+    width: 150px;
+    float: left;
+    background-color: #222;
+    border: solid #dedede;
+    border-width: 0px 1px 1px 1px;
+}
+
+.calendar-right-day-header-div {
+    width: 150px;
+    text-align: center;
+    border: solid #dedede;
+    border-width: 1px 0px 1px 0px;
+}
+
+.calendar-right-day-content-div {
+    height: 40px;
+    width: 150px;
+    border: solid #dedede;
+    border-width: 0px 0px 1px 0px;
+    font-size: 12px;
+    text-align: center;
+    white-space: pre-line;
+}
+
+.calendar-race-completed {
+    background: #000;
+}
+
+/*Open*/
+.calendar-race-open,
+.calendar-race-openboots,
+.calendar-race-spoileropen,
+.calendar-race-openplus {
+    background: #0000FF51;
+}
+
+/*Entrance*/
+.calendar-race-crosskeys,
+.calendar-race-retrance,
+.calendar-race-invertedcrosskeys,
+.calendar-race-insanityentrance,
+.calendar-race-crosshunt {
+    background: #00800051;
+}
+
+/*Mystery*/
+.calendar-race-vtmystery,
+.calendar-race-aamystery,
+.calendar-race-championsmystery {
+    background: #DB000052;
+}
+
+/*Standard*/
+.calendar-race-ambrosia,
+.calendar-race-casualboots,
+.calendar-race-standard,
+.calendar-race-hardstandard,
+.calendar-race-sglcasualboots,
+.calendar-race-ambroz1a,
+.calendar-race-standardboots,
+.calendar-race-tournamenthard {
+    background: #8A2BE251;
+}
+
+
+/*Keysanity*/
+.calendar-race-adkeysanity,
+.calendar-race-openkeysanity,
+.calendar-race-mcshuffle,
+.calendar-race-mcboss,
+.calendar-race-hundokeysanity,
+.calendar-race-fadkeysanity {
+    background: #2A83A551;
+}
+
+/*Inverted*/
+.calendar-race-invertedkeysanity,
+.calendar-race-invrosia,
+.calendar-race-invertedadkeys,
+.calendar-race-influkeys,
+.calendar-race-darkopen {
+    background: #FF450051;
+}
+
+/*Hunts*/
+.calendar-race-goldrush,
+.calendar-race-championshunt {
+    background: #6200FF51;
+}
+
+.calendar-race-speedystandardinv,
+.calendar-race-grabbag,
+.calendar-race-gigabag {
+    background: #FFBC0051;
+}
+
+/*Doors*/
+.calendar-race-beginnerdoors,
+.calendar-race-intermediatedoors {
+    background: #fbff0051;
+}
+
+/*Keydrop*/
+.calendar-race-potsandbones,
+.calendar-race-truepothunt,
+.calendar-race-crisscross,
+.calendar-race-xdhunt {
+    background: #0bdbff8c;
+}
+
+/*Misc*/
+.calendar-race-champswordless,
+.calendar-race-enemizer,
+.calendar-race-reducedcrystals,
+.calendar-race-potpourri,
+.calendar-race-ludicrousspeed,
+.calendar-race-doubledown,
+.calendar-race-patronparty {
+    background: #0095ff51;
+}
+
+.racer-header-div {
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.racer-lower-div {
+    width: 100%;
+}
+
+.racer-lower-left-div {
+    margin-top: 40px;
+    width: 100%;
+}
+
+.racer-stats-header-div {
+    width: 100%;
+    text-align: center;
+    background-color: #00004D;
+}
+
+.home-video-under-div {
+    margin: 100px auto auto auto;
+    width: 460px;
+}

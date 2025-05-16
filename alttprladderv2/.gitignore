@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/ALTTPR_Ladder/v16/Server/sqlite3/db.lock
+/ALTTPRLadder_ProcessingService/bin/Release
+/.vs
+/.vs
+/ALTTPR_Ladder/bin
+/ALTTPR_Ladder/obj
+/.vs
+/packages

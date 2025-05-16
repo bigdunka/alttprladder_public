@@ -1,0 +1,93 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "ALTTPR Ladder - Race Details";
+    int i = 0;
+}
+
+<script>
+    function ShowMystery(x) {
+        document.getElementById('details' + x).style.display = "block";
+    }
+</script>
+
+<div class="row">
+    <div class="details-header-div">
+        Race: @Model.RaceName [<span id="utc-span">@Model.UTCStartTime</span>] - Mode: @Model.RaceMode @Model.GrabBag - Total Racers: @Model.RacerCount @if (Model.HasStarted) { <span>- <a href="@Model.SeedURL" target="_blank">Download Seed</a></span> }
+        @if (Model.SpoilerHash != null && Model.SpoilerHash != "")
+        {<a target="_blank" href="~/Spoilers/GetSpoilerLog/@Model.SpoilerHash">Download Spoiler</a>}
+        @if (Model.IsMystery && Model.IsFinished)
+        {<span onclick="ShowMystery()" style="cursor: pointer;"> - Show Mystery Flags</span>}
+        @if (Model.IsMystery && Model.IsFinished)
+        {<div id="mystery-details" style="display: none; white-space: pre-line;">@Model.MysteryDetails</div>}
+        <span style="height: 24px; margin-left: 30px; cursor: pointer;" onclick="PopoutList('@Model.RaceGUID')">POPOUT STANDINGS LIST &#x2934;</span>
+    </div>
+    <table class="race-details-table">
+        <thead class="details-table-header">
+            <tr style="background-color: #2a292f; border-bottom-width: var(--bs-border-width);">
+                <th>
+                    RESULT
+                </th>
+                <th>
+                    RACER
+                </th>
+                <th>
+                    FINISH TIME
+                </th>
+                <th>
+                    RANKING
+                </th>
+                <th>
+                    GAIN/LOSS
+                </th>
+                <th>
+                    COMMENT
+                </th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model.Standings)
+        {
+            var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+            <tr style="text-align: center; @background">
+                <td class="standings-table-object">
+                    @(item.FinishPlace == "999th" ? "FF" : item.FinishPlace)
+                </td>
+                <td style="text-align: left;" class="standings-table-object">
+                    <a href="/racers/index/@item.RacerGUID">@item.RacerName</a>
+                </td>
+                <td class="standings-table-object">
+                    @item.FinishTime
+                </td>
+                <td class="standings-table-object">
+                    @item.Ranking
+                </td>
+                <td style="color: @(item.Change > 0 ? "green" : item.Change < 0 ? "red" : "white") !important" class="standings-table-object">
+                    @(Model.IsFinished ? (@item.Change > 0 ? "+" + item.Change : item.Change ) : "")
+                </td>
+                <td class="standings-table-object">
+                    @if (Model.IsFinished && item.Comment != null) {<span style="cursor: pointer;" title="@item.Comment">HOVER TO VIEW</span>}
+                </td>
+            </tr>
+
+            i++;
+        }
+    </table>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        ConvertSpanFromUTC("utc-span");
+    });
+
+    function ShowMystery() {
+        document.getElementById("mystery-details").style.display = "";
+    }
+
+    function PopoutList(g) {
+        window.open('../../Home/LiveStandingsPopout/' + g, '', 'width=450,height=510,titlebar=0,menubar=0,toolbar=0,scrollbars=0,resizable=0');
+
+    }
+</script>

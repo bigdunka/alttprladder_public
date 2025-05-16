@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="margin-top: 40px; text-align: center;">
+    <h3>The live standings should load in a popout window. If it has not done so, please check your popup settings in your browser and set to allow from this page.<br /><br />You may close this window</h3>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        window.open('../../Home/LiveStandingsPopout/@Model.RaceGUID', '', 'width=450,height=510,titlebar=0,menubar=0,toolbar=0,scrollbars=0,resizable=0');
+    });
+</script>

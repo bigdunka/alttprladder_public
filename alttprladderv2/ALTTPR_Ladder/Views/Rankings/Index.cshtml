@@ -1,0 +1,104 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "ALTTPR Ladder - Rankings";
+}
+
+<script src='~/Scripts/tablesort.js'></script>
+<script src='~/Scripts/tablesort.number.js'></script>
+
+<script>
+    function ChangeRanking(x) {
+        document.location.href = '/rankings/index/' + x;
+    }
+</script>
+
+
+<div class="row" style="margin-top: 40px;">
+    <div style="width: 200px;">
+        @foreach (var f in Model.Modes)
+        {
+            <div class="inv-left-tab @(Model.ActiveMode != f.flag_id ? "inactive" : "active")" onclick="ChangeRanking('@f.flag_id');">
+                @f.FlagName
+            </div>
+        }
+    </div>
+
+    <div class="standings-right-div">
+        <table id="standingstable" class="table rankings-table">
+            <thead>
+                <tr style="text-align: center; cursor: pointer; background-color: #2a292f;" class="rankings-table-header">
+                    <th class="standings-table-object">
+                        RANK
+                    </th>
+                    <th class="standings-table-object">
+                        RACER
+                    </th>
+                    <th class="standings-table-object">
+                        RATING
+                    </th>
+                    <th class="standings-table-object">
+                        TOTAL
+                    </th>
+                    <th class="standings-table-object">
+                        FIRSTS
+                    </th>
+                    <th class="standings-table-object">
+                        SECONDS
+                    </th>
+                    <th class="standings-table-object">
+                        THIRDS
+                    </th>
+                    <th class="standings-table-object">
+                        FORFEITS
+                    </th>
+                </tr>
+            </thead>
+
+            @{
+                int i = 0;
+            }
+
+            @foreach (var item in Model.Rankings)
+            {
+                var background = i % 2 == 1 ? "background-color: #2a292f" : "background-color: #353535";
+
+                <tr style="text-align: center; @background">
+                    <td class="standings-table-object">
+                        @item.Rank
+                    </td>
+                    <td style="text-align: left;" class="standings-table-object">
+                        <a href="/racers/index/@item.RacerGUID">@item.RacerName</a>
+                    </td>
+                    <td class="standings-table-object">
+                        @item.Ranking
+                    </td>
+                    <td class="standings-table-object">
+                        @item.TotalRaces
+                    </td>
+                    <td class="standings-table-object">
+                        @item.Firsts
+                    </td>
+                    <td class="standings-table-object">
+                        @item.Seconds
+                    </td>
+                    <td class="standings-table-object">
+                        @item.Thirds
+                    </td>
+                    <td class="standings-table-object">
+                        @item.Forfeits
+                    </td>
+                </tr>
+
+                i++;
+            }
+
+        </table>
+        <span style="float: right;">As of @Model.LastUpdated.ToString("yyyy-MM-dd")</span><br />
+
+        <script>
+            new Tablesort(document.getElementById('standingstable'));
+        </script>
+
+    </div>
+</div>
+
